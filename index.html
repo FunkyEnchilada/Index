@@ -6,121 +6,216 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Page Not Found</title>
 <link id="favicon" rel="icon" type="image/gif" href="https://www.transparenttextures.com/patterns/ag-square.png">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 </head>
 
 <style>
-.scroll-container {
-width: 100%;
-overflow-x: auto;
-white-space: nowrap;
-padding: 10px 0;
-border: 2px solid transparent;
-border-image: linear-gradient(to bottom right, #8345a0, black, rgb(95, 0, 16)) 1;
+:root {
+  --mc-bg: #05080d;
+  --mc-panel: #0b1420;
+  --mc-cyan: #4fd8ff;
+  --mc-blue: #1e6fa8;
+  --mc-amber: #ffb84d;
+  --mc-red: #ff5c5c;
+  --mc-grid: rgba(79, 216, 255, 0.08);
 }
 
-.scroll-content {
-display: inline-flex;
-}
+* { box-sizing: border-box; }
 
-.button {
-margin-right: 10px;
-padding: 10px 20px;
-background-color: #000000;
-color: white;
-border: 2px solid transparent;
-border-radius: 5px;
-cursor: pointer;
-font-size: 14px;
-border-image: linear-gradient(to bottom right, #8345a0, black, rgb(95, 0, 16)) 1;
-}
-
-.button:hover {
-animation: size 1s infinite ease-in-out;
-background-color: #8345a0;
-}
-
-@keyframes float {
-12.5% { transform: translateY(0px); }
-25% { transform: translateY(1px); }
-37.5% { transform: translateY(2px); }
-50% { transform: translateY(1px); }
-62.5% { transform: translateY(0px); }
-75% { transform: translateY(-1px); }
-87.5% { transform: translateY(-2px); }
-100% { transform: translateY(-1px); }
-}
-
-@keyframes size {
-0% { transform: scale(1); }
-50% { transform: scale(1.2); }
-100% { transform: scale(1); }
-}
-
-#fullscreenButton {
-position: fixed;
-bottom: 10px;
-left: 45%;
-background-color: #000;
-color: white;
-padding: 15px 30px;
-font-size: 16px;
-border: 2px solid transparent;
-border-radius: 5px;
-cursor: se-resize;
-border-image: linear-gradient(to bottom right, #8345a0, black, rgb(95, 0, 16)) 1;
-}
-
-#fullscreenButton:hover {
-background-color: #8345a0;
-animation: infinite size 1s ease-in-out;
-}
-
-#toggleModeButton {
-position: fixed;
-bottom: 10px;
-right: 10px;
-background-color: #000;
-color: white;
-padding: 15px 30px;
-font-size: 16px;
-border: 2px solid transparent;
-border-radius: 5px;
-cursor: wait;
-border-image: linear-gradient(to bottom right, #8345a0, black, rgb(95, 0, 16)) 1;
-}
-#toggleModeButton:hover {
-background-color: #8345a0;
-animation: infinite size 1s ease-in-out;
-}
-
-#overlayImage {
-position: fixed;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-cursor: pointer;
-z-index: 9999;
-display: block;
+html, body {
+  height: 100%;
+  margin: 0;
 }
 
 body {
-background-repeat: no-repeat;
-background-size: cover;
-background-attachment: fixed;
-background-position: center;
-background-image: url('https://64.media.tumblr.com/aa398772b1e0b6ec73a946f0345c447a/fcf1d4a8156bfe76-f5/s400x600/62ee3a5c6671de6326e1d320912fd5e2aaad57cb.gif');
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--mc-cyan);
+  background-color: var(--mc-bg);
+  background-image:
+    linear-gradient(var(--mc-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--mc-grid) 1px, transparent 1px),
+    radial-gradient(ellipse at center, #0d1b2a 0%, #05080d 75%);
+  background-size: 40px 40px, 40px 40px, cover;
+  background-attachment: fixed;
+  background-repeat: repeat, repeat, no-repeat;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* subtle scanline overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.02) 0px,
+    rgba(255,255,255,0.02) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  z-index: 5000;
+}
+
+.scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 14px 16px;
+  background: linear-gradient(180deg, rgba(11,20,32,0.95), rgba(11,20,32,0.75));
+  border: 1px solid var(--mc-blue);
+  border-left: none;
+  border-right: none;
+  box-shadow: 0 0 20px rgba(79, 216, 255, 0.15), inset 0 0 30px rgba(79, 216, 255, 0.05);
+  backdrop-filter: blur(2px);
+}
+
+.scroll-content {
+  display: inline-flex;
+  align-items: center;
+}
+
+.button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  background-color: rgba(30, 111, 168, 0.15);
+  color: var(--mc-cyan);
+  border: 1px solid var(--mc-cyan);
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.button::before {
+  content: "▸ ";
+  color: var(--mc-amber);
+}
+
+.button:hover {
+  background-color: rgba(79, 216, 255, 0.2);
+  box-shadow: 0 0 12px rgba(79, 216, 255, 0.6);
+  color: #ffffff;
+  animation: size 1s infinite ease-in-out;
+}
+
+@keyframes float {
+  12.5% { transform: translateY(0px); }
+  25% { transform: translateY(1px); }
+  37.5% { transform: translateY(2px); }
+  50% { transform: translateY(1px); }
+  62.5% { transform: translateY(0px); }
+  75% { transform: translateY(-1px); }
+  87.5% { transform: translateY(-2px); }
+  100% { transform: translateY(-1px); }
+}
+
+@keyframes size {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(79, 216, 255, 0.3); }
+  50% { box-shadow: 0 0 18px rgba(79, 216, 255, 0.7); }
+}
+
+#viewerContainer {
+  position: relative;
+}
+
+#fullscreenButton {
+  position: fixed;
+  bottom: 16px;
+  left: 45%;
+  background-color: var(--mc-panel);
+  color: var(--mc-amber);
+  padding: 14px 28px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: 1px solid var(--mc-amber);
+  border-radius: 4px;
+  cursor: se-resize;
+  animation: pulseGlow 3s infinite;
+}
+
+#fullscreenButton:hover {
+  background-color: rgba(255, 184, 77, 0.15);
+  color: #ffffff;
+  animation: size 1s infinite ease-in-out;
+}
+
+#toggleModeButton {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  background-color: var(--mc-panel);
+  color: var(--mc-cyan);
+  padding: 14px 28px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: 1px solid var(--mc-cyan);
+  border-radius: 4px;
+  cursor: wait;
+  animation: pulseGlow 3s infinite;
+}
+
+#toggleModeButton:hover {
+  background-color: rgba(79, 216, 255, 0.15);
+  color: #ffffff;
+  animation: size 1s infinite ease-in-out;
+}
+
+#overlayImage {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 9999;
+  display: block;
 }
 
 .embed {
-border: 2px solid transparent;
-border-image: linear-gradient(to bottom right, #8345a0, black, rgb(95, 0, 16)) 1;
+  border: 1px solid var(--mc-blue);
+  box-shadow: 0 0 25px rgba(30, 111, 168, 0.35);
+}
+
+/* footer / attribution bar styled like a status readout */
+p {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: #5a7d94;
+  text-align: center;
+  padding: 8px;
+  margin: 0;
+  border-top: 1px solid rgba(79, 216, 255, 0.15);
+  background: rgba(5, 8, 13, 0.9);
+}
+
+p a {
+  color: var(--mc-cyan);
+  text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
 }
 </style>
 </head>
 <body>
 <div class="scroll-container">
 <div class="scroll-content">
-<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExandkcG1vOWp1b2duZzRlOWpldDh5emdibnVhNmc0NDNhb3Z0b3lzaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/NECC48LmUTh7f5IPKe/giphy.gif" alt="logo" style="width: 50px; height: 50px; z-index: 9999999;">
+<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExandkcG1vOWp1b2duZzRlOWpldDh5emdibnVhNmc0NDNhb3Z0b3lzaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/NECC48LmUTh7f5IPKe/giphy.gif" alt="logo" style="width: 50px; height: 50px; z-index: 9999999; margin-right: 14px; border: 1px solid var(--mc-cyan); border-radius: 3px;">
 <button class="button" onclick="changeEmbed('https://educationworld.neocities.org')">EXTHANG3R</button>
 <button class="button" onclick="changeEmbed('https://classroom84x-math.vercel.app/')">classroom84</button>
 <button class="button" onclick="changeEmbed('https://umcheeto.spelar.se')">duckHTML</button>
@@ -179,12 +274,6 @@ function hideOverlay() {
 var overlayImage = document.getElementById('overlayImage');
 overlayImage.style.display = 'none';
 }
-
-// Warn user before leaving or closing the tab
-window.addEventListener('beforeunload', function (e) {
-e.preventDefault();
-e.returnValue = '';
-});
 </script>
 <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
 <a property="dct:title" rel="cc:attributionURL" href="https://www.school0gy.com/downloads">GGlauncherV6</a> by
